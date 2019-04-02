@@ -1,0 +1,11 @@
+.questions-list{
+    li{
+        margin-bottom: 15px;
+        &.success{
+            background: green;
+        }
+        &.danger{
+            background: red;
+        }
+    }
+}
