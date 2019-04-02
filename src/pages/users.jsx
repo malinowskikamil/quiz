@@ -65,6 +65,7 @@ class Users extends Component {
                     type="button"
                     value={"Activate"}
                     onClick={() => this.handleActivateUser(name)}
+                    disabled={name === activeUser}
                   />
                   <Button
                     variant="danger"
@@ -72,6 +73,8 @@ class Users extends Component {
                     type="button"
                     value={"Delete"}
                     onClick={() => this.handleDeleteUser(name)}
+                    disabled={name === activeUser}
+
                   />
                 </ButtonToolbar>
               </ListGroup.Item>

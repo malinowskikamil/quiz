@@ -1,5 +1,6 @@
-export const checkIfActiveUser = () => {
-  if (!sessionStorage.getItem("active_user")) {
-   return  window.location.pathname = "users";
-  }
-};
+export const api_url = "https://opentdb.com/";
+
+export const getActiveUser = () =>
+  JSON.parse(sessionStorage.getItem("active_user"));
+
+export const checkIfActiveUser = () => !!getActiveUser();

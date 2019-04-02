@@ -1,20 +1,21 @@
 import React, { Component } from "react";
 import Layout from "../components/layout";
-import { checkIfActiveUser } from "../utils/defaults";
+import { Redirect } from "react-router-dom";
+import { checkIfActiveUser, getActiveUser } from "../utils/defaults";
 
 class Home extends Component {
   state = {};
 
-  componentDidMount() {
-    checkIfActiveUser();
-  }
-
   render() {
-    return (
-      <Layout>
-        <p>Home</p>
-      </Layout>
-    );
+    if (checkIfActiveUser()) {
+      return (
+        <Layout title={`Player ${getActiveUser()}`}>
+          <p>Home</p>
+        </Layout>
+      );
+    } else {
+      return <Redirect to="/users" />;
+    }
   }
 }
 
