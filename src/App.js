@@ -1,12 +1,18 @@
 import React, { Component } from "react";
-import { BrowserRouter } from "react-router-dom";
-import Main from "./components/main";
+import { Switch, Route } from "react-router-dom";
+import Users from './pages/users'
+import Home from "./pages/home";
+import Game from "./pages/game";
+import HighScore from "./pages/highscore";
 class App extends Component {
   render() {
     return (
-      <BrowserRouter basename={process.env.PUBLIC_URL}>
-        <Main />
-      </BrowserRouter>
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route exact path="/users" component={Users} />
+        <Route exact path={`/play/:level/:category`} component={Game} />
+        <Route exact path={`/highscores`} component={HighScore} />
+      </Switch>
     );
   }
 }

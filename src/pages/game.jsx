@@ -1,7 +1,7 @@
 import axios from "axios";
 import { api_url } from "../utils/defaults";
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import Layout from "../components/layout";
 import { Button, ButtonToolbar, ListGroup, ProgressBar } from "react-bootstrap";
 
@@ -55,7 +55,7 @@ class Game extends Component {
       }
     );
     localStorage.setItem("high_scores", JSON.stringify(newHighScores));
-    return (window.location.pathname = "/highscores");
+    this.props.history.push('/highscores')
   };
 
   handleCheckOldScore = () => {
