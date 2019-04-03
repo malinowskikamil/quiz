@@ -1,11 +1,45 @@
-.questions-list{
-    li{
-        margin-bottom: 15px;
-        &.success{
-            background: green;
-        }
-        &.danger{
-            background: red;
-        }
+.questions-container {
+    margin: 40px 0;
+    .question{
+        font-size: 25px;
+        line-height: 30px;
+        color: #fff;
+        font-style: italic;
+        margin-bottom: 20px;
+        text-align: center;
     }
+  .questions-list {
+    li {
+      margin-bottom: 15px;
+      border-radius: 5px;
+      transition: 0.2s;
+      &.success {
+        background: green;
+      }
+      &.danger {
+        background: red;
+      }
+      &:active {
+        transform: scale(0.95);
+      }
+    }
+  }
+}
+.game-container {
+  padding: 50px;
+  .progress {
+    margin-bottom: 25px;
+  }
+  .active-score {
+    text-align: center;
+    font-size: 20px;
+    line-height: 25px;
+    color: #fff;
+  }
+  .btn-toolbar {
+    margin: 20px 0;
+    .btn:not(:last-child) {
+      margin-right: 20px;
+    }
+  }
 }
