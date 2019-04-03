@@ -28,7 +28,6 @@ class Home extends Component {
       const { categories, activeCategory, activeLevel, levels } = this.state;
       return (
         <Layout title={`Player ${getActiveUser()}`}>
-          {activeCategory}
           <Form.Group>
             <Form.Label>Select Category:</Form.Label>
             <Form.Control
@@ -61,7 +60,7 @@ class Home extends Component {
               ))}
             </Form.Control>
           </Form.Group>
-          <Link to={`/play/${activeLevel.toLowerCase()}/${activeCategory}`}>
+          <Link className="btn btn-warning" to={`/play/${activeLevel.toLowerCase()}/${activeCategory}`}>
             Play
           </Link>
         </Layout>

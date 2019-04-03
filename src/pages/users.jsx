@@ -85,7 +85,7 @@ class Users extends Component {
           variant="primary"
           onClick={() => this.setState({ addUserOpen: !addUserOpen })}
         >
-          Add {users.length === 0 ? "" : "another"} user
+          Add {users && users.length === 0 ? "" : "another"} user
         </Button>
         {activeUser && activeUser.length && (
           <Button
