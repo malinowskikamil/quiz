@@ -20,3 +20,10 @@ header {
     width: 100%;
     margin: 0 auto;
 }
+
+.btn-toolbar {
+  margin: 20px 0;
+  .btn:not(:last-child) {
+    margin-right: 20px;
+  }
+}

@@ -43,6 +43,29 @@ class Game extends Component {
     }
   };
 
+  handleSaveScore = () => {
+    const user = JSON.parse(sessionStorage.getItem("active_user")),
+      { score } = this.state;
+    const newHighScores = JSON.parse(localStorage.getItem("high_scores")).map(
+      item => {
+        if (item.name === user) {
+          return { name: item.name, score };
+        }
+        return { name: item.name, score: item.score };
+      }
+    );
+    localStorage.setItem("high_scores", JSON.stringify(newHighScores));
+    return (window.location.pathname = "/highscores");
+  };
+
+  handleCheckOldScore = () => {
+    const user = JSON.parse(sessionStorage.getItem("active_user")),
+      oldScore = JSON.parse(localStorage.getItem("high_scores")).find(
+        ({ name }) => name === user
+      ).score;
+    return this.state.score > oldScore;
+  };
+
   renderAnswers = (data, activeQuestion) => {
     const shuffle = a => {
       for (let i = a.length - 1; i > 0; i--) {
@@ -55,7 +78,10 @@ class Game extends Component {
       let answers = shuffle(data.incorrect_answers.concat(data.correct_answer));
       return (
         <div className="questions-container">
-          <h1 className="question" dangerouslySetInnerHTML={{ __html: data.question }} />
+          <h1
+            className="question"
+            dangerouslySetInnerHTML={{ __html: data.question }}
+          />
           <ListGroup as="ul" className="questions-list">
             {answers.map(item => (
               <ListGroup.Item
@@ -65,8 +91,7 @@ class Game extends Component {
                   this.handleAnswer(target, item, data.correct_answer)
                 }
                 dangerouslySetInnerHTML={{ __html: item }}
-              >
-              </ListGroup.Item>
+              />
             ))}
           </ListGroup>
         </div>
@@ -79,10 +104,21 @@ class Game extends Component {
             <Link className="btn btn-success" to="/">
               Change game
             </Link>
+            <Link className="btn btn-success" to="/users">
+              Change user
+            </Link>
             <Button variant="success" onClick={() => this.handleReset()}>
               Restart
             </Button>
           </ButtonToolbar>
+          {this.handleCheckOldScore() && (
+            <>
+              <p>New record!!!</p>
+              <Button variant="success" onClick={() => this.handleSaveScore()}>
+                Save Score
+              </Button>
+            </>
+          )}
         </div>
       );
     }
