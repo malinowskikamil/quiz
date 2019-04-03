@@ -23,7 +23,11 @@ class Users extends Component {
     if (!localStorage.getObj("users")) {
       localStorage.setObj("users", []);
     }
+    if (!localStorage.getObj("high_scores")) {
+      localStorage.setObj("high_scores", []);
+    }
     let users = localStorage.getObj("users");
+    let highScores = localStorage.getObj("high_scores");
     if (users.find(({ name }) => name === newUser)) {
       this.setState({ error: `User ${newUser} already exists` });
       setTimeout(() => {
@@ -31,15 +35,20 @@ class Users extends Component {
       }, 2000);
     } else {
       const newUsers = users.concat([{ name: newUser }]);
+      const newHighScores = highScores.concat([{ name: newUser, score: 0 }]);
       localStorage.setObj("users", newUsers);
+      localStorage.setObj("high_scores", newHighScores);
       this.setState({ newUser: "", users: newUsers });
     }
   };
 
   handleDeleteUser = user => {
     let users = localStorage.getObj("users");
+    let highScores = localStorage.getObj("high_scores");
     const newUsers = users.filter(({ name }) => name !== user);
+    const newHighScores= highScores.filter(({ name }) => name !== user);
     localStorage.setObj("users", newUsers);
+    localStorage.setObj("high_scores", newHighScores);
     this.setState({ users: newUsers });
   };
 
@@ -54,7 +63,8 @@ class Users extends Component {
       <Layout title={"List of users"}>
         <p>Choose an user</p>
         <ListGroup as="ul" className="users-list">
-          {users && users.length > 0 &&
+          {users &&
+            users.length > 0 &&
             users.map(({ name }) => (
               <ListGroup.Item as="li" key={name}>
                 <span>{name}</span>
@@ -74,27 +84,31 @@ class Users extends Component {
                     value={"Delete"}
                     onClick={() => this.handleDeleteUser(name)}
                     disabled={name === activeUser}
-
                   />
                 </ButtonToolbar>
               </ListGroup.Item>
             ))}
-          {users && users.length === 0 && <p>There's no users yet. Please create one</p>}
+          {users && users.length === 0 && (
+            <p>There's no users yet. Please create one</p>
+          )}
         </ListGroup>
-        <Button
-          variant="primary"
-          onClick={() => this.setState({ addUserOpen: !addUserOpen })}
-        >
-          Add {users && users.length === 0 ? "" : "another"} user
-        </Button>
-        {activeUser && activeUser.length && (
+        <ButtonToolbar>
           <Button
             variant="primary"
-            onClick={() => window.location.pathname = '/'}
+            onClick={() => this.setState({ addUserOpen: !addUserOpen })}
           >
-            Play as {activeUser}
+            Add {users && users.length === 0 ? "" : "another"} user
           </Button>
-        )}
+          {activeUser && activeUser.length && (
+            <Button
+              variant="primary"
+              onClick={() => (window.location.pathname = "/")}
+            >
+              Play as {activeUser}
+            </Button>
+          )}{" "}
+        </ButtonToolbar>
+
         <div className={`create-user-container ${addUserOpen ? "open" : ""}`}>
           <Form.Group controlId="exampleForm.ControlInput1">
             <Form.Label>User name</Form.Label>

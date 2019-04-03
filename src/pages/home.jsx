@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { Component } from "react";
 import { Redirect, Link } from "react-router-dom";
 import Layout from "../components/layout";
-import { Form } from "react-bootstrap";
+import { Form, ButtonToolbar } from "react-bootstrap";
 
 import { checkIfActiveUser, getActiveUser, api_url } from "../utils/defaults";
 
@@ -60,9 +60,18 @@ class Home extends Component {
               ))}
             </Form.Control>
           </Form.Group>
+          <ButtonToolbar>
           <Link className="btn btn-warning" to={`/play/${activeLevel.toLowerCase()}/${activeCategory}`}>
             Play
           </Link>
+          <Link to="/highscores" className="btn btn-warning">
+            High scores list
+          </Link>
+          <Link to="/users" className="btn btn-warning">
+            Change user
+          </Link>
+          </ButtonToolbar>
+      
         </Layout>
       );
     } else {
