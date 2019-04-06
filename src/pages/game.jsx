@@ -11,17 +11,18 @@ class Game extends Component {
     questionsAmount: 10,
     activeQuestion: 0,
     score: 0,
-    timer: 15
+    timer: 15,
+    showTimer: true
   };
 
   componentDidMount() {
     this.handleGetQuestions();
   }
-  
+
   componentWillUnmount() {
     clearInterval(this.tick);
   }
-  
+
 
   handleGetQuestions = () => {
     const { level, category } = this.props.match.params;
@@ -39,7 +40,7 @@ class Game extends Component {
           }
           return a;
         };
-        results.map(item => 
+        results.map(item =>
           item.answers = shuffle(item.incorrect_answers.concat(item.correct_answer))
         )
         this.setState({ questions: results })
@@ -162,7 +163,7 @@ class Game extends Component {
       return "Loading ...";
     } else if (questions.length > 0 && activeQuestion < questionsAmount) {
       return `${questions[activeQuestion].category}`;
-    } else if (questionsAmount === 10) {
+    } else if (activeQuestion === 10) {
       return "Results";
     }
   };
@@ -173,6 +174,9 @@ class Game extends Component {
       if (timer === 0) {
         clearInterval(this.tick);
         this.setState({ activeQuestion: activeQuestion + 1, timer: 15 })
+      } else if (activeQuestion === 10) {
+        clearInterval(this.tick);
+        this.setState({ showTimer: false })
       } else {
         this.setState({ timer: timer - 1 })
       }
@@ -180,9 +184,8 @@ class Game extends Component {
   };
 
 
-
   render() {
-    const { questions, activeQuestion, questionsAmount, score, timer } = this.state;
+    const { questions, activeQuestion, questionsAmount, score, timer, showTimer } = this.state;
     return (
       <Layout title={this.renderTitle()}>
         <div className="game-container">
@@ -193,7 +196,7 @@ class Game extends Component {
           {activeQuestion < questionsAmount && (
             <p className="active-score"> Active score: {score}</p>
           )}
-          <p>Time's left: {timer}</p>
+          {showTimer && <p className="timer">Time's left: {timer}</p>}
           {questions.length > 0 &&
             this.renderAnswers(questions[activeQuestion], activeQuestion)}
         </div>
