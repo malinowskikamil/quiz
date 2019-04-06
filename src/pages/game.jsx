@@ -112,7 +112,7 @@ class Game extends Component {
     } else {
       return (
         <div className="results">
-          <h2>Your's score: {this.state.score}</h2>
+          <h2>Your's score: <span className='final-score'>{this.state.score}</span></h2>
           <ButtonToolbar>
             <Link className="btn btn-success" to="/">
               Change game
